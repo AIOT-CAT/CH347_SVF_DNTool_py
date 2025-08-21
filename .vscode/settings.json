@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "random": "c",
-        "__locale": "c",
-        "string_view": "c",
-        "__string": "c",
-        "string": "c"
-    }
-}
