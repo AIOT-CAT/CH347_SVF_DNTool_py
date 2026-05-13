@@ -228,7 +228,6 @@ class SVFParser:
                     idx += 1
                     if idx < len(tokens):
                         data_str = tokens[idx]
-                        
                         # 处理带括号的数据
                         if data_str.startswith('(') and data_str.endswith(')'):
                             data_str = data_str[1:-1]
@@ -392,7 +391,6 @@ class JTAGController:
     
     def shift_ir(self, tdi_data: str, length: int, tdo_expected: str = None, mask: str = None):
         if self.verbose:
-            print(f"Shifting IR: {length} bits, TDI: {tdi_data}")
             if tdo_expected:
                 print(f"  TDO expected: {tdo_expected}, Mask: {mask}")
         
@@ -593,12 +591,12 @@ class Ch347_JTAGInterface(JTAGHardwareInterface):
         if not self.device_opened:
             print("Failed to open CH347 device")
             exit()
-        self.ch347.jtag_init(1)
+        self.ch347.jtag_init(3)
     
     def set_frequency(self, frequency: float):
         self.frequency = frequency
         if self.device_opened:
-            self.ch347.jtag_init(1)
+            self.ch347.jtag_init(3)
         if self.verbose:
             print(f"Setting TCK frequency: {frequency/1e6:.1f} MHz")
 
@@ -643,7 +641,6 @@ class Ch347_JTAGInterface(JTAGHardwareInterface):
                 cmd_length += 1
 
                 result = self.ch347.write_data(bytes(cmd_pack), cmd_length)
-            # 如需额外延时可取消注释
             # time.sleep(sleep_time - cycle_time)
         
         # 情况2：TCK周期数无效（count <= 0）但指定了最小时间 - 按时间处理
@@ -664,6 +661,7 @@ class Ch347_JTAGInterface(JTAGHardwareInterface):
             try:
                 # 将十六进制字符串转换为字节数组（自动处理2字符→1字节）
                 # tdi_data_in = tdi_data_in[::-1]
+                # print(f"Raw TDI data: {tdi_data_in}")
                 tdi_bytes = bytes.fromhex(tdi_data_in)
                 tdi_bytes = tdi_bytes[::-1]
             except ValueError as e:

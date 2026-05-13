@@ -40,7 +40,7 @@ class ch347:
     def __init__(self, device_index=0, dll_path=None):
         if dll_path is None:
             # Let Windows find the DLL in system directories
-            self.ch347dll = ctypes.cdll.LoadLibrary('D:/WCH/WCH_application/CH347/FAE-Test/PYCH347/CH341PAR/LIB/i386/CH347DLL.dll')
+            self.ch347dll = ctypes.cdll.LoadLibrary('D:/PYCH347/CH341PAR/LIB/i386/CH347DLL.dll')
         else:
             # Use the specified path
             self.ch347dll = ctypes.WinDLL(dll_path)
